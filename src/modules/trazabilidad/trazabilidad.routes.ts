@@ -23,22 +23,22 @@ router.post("/evento", async (req: Request, res: Response, next: NextFunction) =
 // ── Cadena completa de un producto ──────────────────────────────
 router.get("/producto/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const cadena = await traza.getCadena(req.params.id);
-    res.json({ id_producto: req.params.id, cadena });
+    const cadena = await traza.getCadena(req.params.id as string);
+    res.json({ id_producto: req.params.id as string, cadena });
   } catch (err) { next(err); }
 });
 
 // ── Verificar integridad de la cadena ───────────────────────────
 router.get("/producto/:id/verificar", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json(await traza.verificar(req.params.id));
+    res.json(await traza.verificar(req.params.id as string));
   } catch (err) { next(err); }
 });
 
 // ── Trazabilidad por proveedor ──────────────────────────────────
 router.get("/proveedor/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json({ id_proveedor: req.params.id, compras: await traza.porProveedor(req.params.id) });
+    res.json({ id_proveedor: req.params.id as string, compras: await traza.porProveedor(req.params.id as string) });
   } catch (err) { next(err); }
 });
 
